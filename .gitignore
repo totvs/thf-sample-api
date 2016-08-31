@@ -1,0 +1,12 @@
+# Dependency directory
+node_modules/
+uploads/
+reports/
+
+# other
+.tmp
+.vscode
+
+# files
+.brackets.json
+npm-debug.log

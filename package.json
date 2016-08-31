@@ -1,0 +1,43 @@
+{
+  "name": "thf-sample-api",
+  "version": "0.0.1",
+  "description": "TOTVS | HTML Framework - Sample REST API - NodeJS",
+  "repository": "https://github.com/devtotvs/thf-sample-api",
+  "homepage": "https://github.com/devtotvs/thf-sample-api",
+  "license": "MIT",
+  "author": {
+    "name": "TOTVS",
+    "email": "devtotvs@totvs.com",
+    "url": "https://github.com/devtotvs/thf-sample-api"
+  },
+  "keywords": [
+    "totvs",
+    "totvs-html-framework",
+    "thf",
+    "rest",
+    "api",
+    "supertest"
+  ],
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "mocha --reporter spec --check-leaks",
+    "testWithReport": "mocha --reporter mochawesome --reporter-options \"reportDir=reports\\test,reportName=index,reportTitle=Sample REST API,inlineAssets=true\" --check-leaks"
+  },
+  "dependencies": {
+    "body-parser": "^1.14.1",
+    "express": "^4.13.3",
+    "multer": "^1.1.0",
+    "sequelize": "^3.12.1",
+    "sequelize-cli": "^2.0.0",
+    "sqlite3": "^3.1.0"
+  },
+  "devDependencies": {
+    "faker": "^3.1.0",
+    "mocha": "^3.0.2",
+    "mochawesome": "^1.5.1",
+    "should": "^11.1.0",
+    "standard": "^8.0.0",
+    "supertest": "^2.0.0"
+  }
+}
