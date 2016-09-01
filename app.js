@@ -4,6 +4,7 @@ let express = require('express')
 let bodyParser = require('body-parser')
 
 let customers = require('./routes/customers')
+let heros = require('./routes/heros')
 let mashups = require('./routes/mashups')
 let files = require('./routes/files')
 let profiles = require('./routes/profiles')
@@ -22,6 +23,7 @@ app.all('*', (req, res, next) => {
 })
 
 app.use('/api/v1/customers', customers)
+app.use('/api/v1/heros', heros)
 app.use('/api/v1/mashups', mashups)
 app.use('/api/v1/files', files)
 app.use('/api/v1/profiles', profiles)

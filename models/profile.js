@@ -1,6 +1,6 @@
 'use strict'
 
-module.exports = function (sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
   let Profile = sequelize.define('Profile', {
     pageId: {
       type: DataTypes.STRING,
