@@ -1,6 +1,6 @@
 {
   "name": "thf-sample-api",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "TOTVS | HTML Framework - Sample REST API - NodeJS",
   "repository": "https://github.com/devtotvs/thf-sample-api",
   "homepage": "https://github.com/devtotvs/thf-sample-api",

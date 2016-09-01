@@ -5,7 +5,7 @@ let express = require('express')
 let router = express.Router()
 let utils = require('./utils')
 
-router.get('/', (req, res, next) => {
+router.get('', (req, res, next) => {
   let params
   let result = {
     messages: []
@@ -143,8 +143,8 @@ router.put('', (req, res, next) => {
 router.delete('/:id', (req, res, next) => {
   let result = {
     data: {},
-    length: null,
-    messages: {}
+    length: 0,
+    messages: []
   }
 
   models.Customer.destroy({

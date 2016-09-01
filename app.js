@@ -5,6 +5,7 @@ let bodyParser = require('body-parser')
 
 let customers = require('./routes/customers')
 let mashups = require('./routes/mashups')
+let files = require('./routes/files')
 
 let app = express()
 
@@ -21,6 +22,7 @@ app.all('*', (req, res, next) => {
 
 app.use('/api/v1/customers', customers)
 app.use('/api/v1/mashups', mashups)
+app.use('/api/v1/files', files)
 
 app.use((req, res, next) => {
   res.status(404).send('Url inválida')
