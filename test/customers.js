@@ -4,46 +4,12 @@ require('should')
 
 let request = require('./')
 let faker = require('faker/locale/pt_BR')
+let utils = require('./utils')
 let models = require('../models')
 
 let urlBase = '/api/v1/customers'
 
 let customer = new Customer((new Date()).valueOf())
-
-function Customer (id) {
-  if (id) {
-    this.id = id
-  }
-
-  this.name = faker.name.findName()
-  this.doc_cpf = faker.random.number(99999999999).toString()
-  this.doc_rg = faker.random.number(99999999).toString()
-  this.email = faker.internet.email()
-  this.phone = faker.phone.phoneNumberFormat().replace(/\D/g, '')
-  this.birthday = null
-  this.note = null
-  this.address_zip = faker.address.zipCode().replace(/\D/g, '')
-  this.address_street = faker.address.streetAddress()
-  this.address_number = null
-  this.address_district = null
-  this.address_city = null
-  this.address_complement = null
-}
-
-function validateResponse (res, status, dataIsObject = true) {
-  res.statusCode.should.be.equal(status)
-
-  res.body.should.is.a.Object()
-
-  if (dataIsObject) {
-    res.body.should.have.property('data').is.a.Object()
-  } else {
-    res.body.should.have.property('data').is.a.Array()
-  }
-
-  res.body.should.have.property('length').is.a.Number()
-  res.body.should.have.property('messages').is.a.Array()
-}
 
 describe('Customers', () => {
   before(() => {
@@ -60,7 +26,7 @@ describe('Customers', () => {
         .expect('Content-type', /json/)
         .expect('Content-type', /utf-8/)
         .end((erro, res) => {
-          validateResponse(res, 200, false)
+          utils.validateResponse(res, 200, false)
 
           done()
         })
@@ -71,7 +37,7 @@ describe('Customers', () => {
         .expect('Content-type', /json/)
         .expect('Content-type', /utf-8/)
         .end((erro, res) => {
-          validateResponse(res, 200)
+          utils.validateResponse(res, 200)
 
           res.body.should.have.property('length').is.a.Number().be.equal(1)
 
@@ -89,7 +55,7 @@ describe('Customers', () => {
         .expect('Content-type', /json/)
         .expect('Content-type', /utf-8/)
         .end((erro, res) => {
-          validateResponse(res, 404)
+          utils.validateResponse(res, 404)
 
           res.body.should.have.property('length').is.a.Number().be.equal(0)
 
@@ -109,7 +75,7 @@ describe('Customers', () => {
         .expect('Content-type', /json/)
         .expect('Content-type', /utf-8/)
         .end((erro, res) => {
-          validateResponse(res, 201)
+          utils.validateResponse(res, 201)
 
           res.body.should.have.property('length').is.a.Number().be.equal(1)
 
@@ -172,7 +138,7 @@ describe('Customers', () => {
         .expect('Content-type', /json/)
         .expect('Content-type', /utf-8/)
         .end((erro, res) => {
-          validateResponse(res, 200)
+          utils.validateResponse(res, 200)
 
           res.body.should.have.property('length').is.a.Number().be.equal(1)
 
@@ -250,3 +216,23 @@ describe('Customers', () => {
     })
   })
 })
+
+function Customer (id) {
+  if (id) {
+    this.id = id
+  }
+
+  this.name = faker.name.findName()
+  this.doc_cpf = faker.random.number(99999999999).toString()
+  this.doc_rg = faker.random.number(99999999).toString()
+  this.email = faker.internet.email()
+  this.phone = faker.phone.phoneNumberFormat().replace(/\D/g, '')
+  this.birthday = null
+  this.note = null
+  this.address_zip = faker.address.zipCode().replace(/\D/g, '')
+  this.address_street = faker.address.streetAddress()
+  this.address_number = null
+  this.address_district = null
+  this.address_city = null
+  this.address_complement = null
+}
