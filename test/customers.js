@@ -92,7 +92,6 @@ describe('Customers', () => {
       request
         .post(urlBase)
         .set('Accept', 'application/json')
-        .send({x: 1, y: 'a'})
         .expect('Content-type', /json/)
         .expect('Content-type', /utf-8/)
         .expect(422, done)
@@ -102,6 +101,7 @@ describe('Customers', () => {
       request
         .post(urlBase)
         .set('Accept', 'application/json')
+        .send({x: 1, y: 'a'})
         .expect('Content-type', /json/)
         .expect('Content-type', /utf-8/)
         .expect(422, done)
