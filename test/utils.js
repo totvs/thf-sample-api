@@ -9,6 +9,9 @@ module.exports = {
 function validateResponse (res, status, dataIsObject = true) {
   res.statusCode.should.be.equal(status)
 
+  res.header['content-type'].should.containEql('json')
+  res.header['content-type'].should.containEql('utf-8')
+
   res.body.should.is.a.Object()
 
   if (dataIsObject) {

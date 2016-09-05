@@ -7,7 +7,7 @@ let faker = require('faker/locale/pt_BR')
 let utils = require('./utils')
 let models = require('../models')
 
-let urlBase = '/api/v1/customers'
+const urlBase = '/api/v1/customers'
 
 let customer = new Customer((new Date()).valueOf())
 
@@ -23,8 +23,6 @@ describe('Customers', () => {
   describe('GET', () => {
     it(`${urlBase} - deve retornar uma lista de clientes (status 200)`, done => {
       request.get(urlBase)
-        .expect('Content-type', /json/)
-        .expect('Content-type', /utf-8/)
         .end((erro, res) => {
           utils.validateResponse(res, 200, false)
 
@@ -34,8 +32,6 @@ describe('Customers', () => {
 
     it(`${urlBase}/${customer.id} - deve retornar um único cliente quando passa um id existente (status 200)`, done => {
       request.get(`${urlBase}/${customer.id}`)
-        .expect('Content-type', /json/)
-        .expect('Content-type', /utf-8/)
         .end((erro, res) => {
           utils.validateResponse(res, 200)
 
@@ -52,8 +48,6 @@ describe('Customers', () => {
 
     it(`${urlBase}/9999999999999 - não deve retornar nenhum cliente quando passa um id inexistente (status 404)`, done => {
       request.get(`${urlBase}/9999999999999`)
-        .expect('Content-type', /json/)
-        .expect('Content-type', /utf-8/)
         .end((erro, res) => {
           utils.validateResponse(res, 404)
 
@@ -72,8 +66,6 @@ describe('Customers', () => {
         .post(urlBase)
         .set('Accept', 'application/json')
         .send(postCustomer)
-        .expect('Content-type', /json/)
-        .expect('Content-type', /utf-8/)
         .end((erro, res) => {
           utils.validateResponse(res, 201)
 
@@ -135,8 +127,6 @@ describe('Customers', () => {
         .put(`${urlBase}/${customer.id}`)
         .set('Accept', 'application/json')
         .send(customer)
-        .expect('Content-type', /json/)
-        .expect('Content-type', /utf-8/)
         .end((erro, res) => {
           utils.validateResponse(res, 200)
 
@@ -208,7 +198,7 @@ describe('Customers', () => {
 
     it(`${urlBase}/9999999999999 - não deve excluir nenhum cliente ao passar um id inexistente (status 404)`, done => {
       request
-        .delete(urlBase + '/999999')
+        .delete(urlBase + '/9999999999999')
         .set('Accept', 'application/json')
         .expect('Content-type', /json/)
         .expect('Content-type', /utf-8/)

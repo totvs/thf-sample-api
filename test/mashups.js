@@ -11,8 +11,6 @@ describe('Mashups', () => {
   describe('GET', () => {
     it(`${urlBase}/suframaGetCaptcha - deve testar o serviço do Suframa (status 200/503)`, done => {
       request.get(`${urlBase}/suframaGetCaptcha`)
-        .expect('Content-type', /json/)
-        .expect('Content-type', /utf-8/)
         .end((erro, res) => {
           if (res.statusCode === 200) {
             utils.validateResponse(res, 200)
@@ -33,8 +31,6 @@ describe('Mashups', () => {
 
     it(`${urlBase}/getConsultaCPFCaptcha - deve testar o serviço de consulta de CPF (status 200/503)`, done => {
       request.get(`${urlBase}/getConsultaCPFCaptcha`)
-        .expect('Content-type', /json/)
-        .expect('Content-type', /utf-8/)
         .end((erro, res) => {
           if (res.statusCode === 200) {
             utils.validateResponse(res, 200)
@@ -55,8 +51,6 @@ describe('Mashups', () => {
 
     it(`${urlBase}/getConsultaCNPJCaptcha - deve testar o serviço de consulta de CNPJ (status 200/503)`, done => {
       request.get(`${urlBase}/getConsultaCNPJCaptcha`)
-        .expect('Content-type', /json/)
-        .expect('Content-type', /utf-8/)
         .end((erro, res) => {
           if (res.statusCode === 200) {
             utils.validateResponse(res, 200)
@@ -77,8 +71,6 @@ describe('Mashups', () => {
 
     it(`${urlBase}/sintegraParcial - deve testar o serviço do Sintegra (status 200/503)`, done => {
       request.get(`${urlBase}/sintegraParcial`)
-        .expect('Content-type', /json/)
-        .expect('Content-type', /utf-8/)
         .end((erro, res) => {
           if (res.statusCode === 200) {
             utils.validateResponse(res, 200)

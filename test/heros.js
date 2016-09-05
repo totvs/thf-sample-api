@@ -23,8 +23,6 @@ describe('Heros', () => {
   describe('GET', () => {
     it(`${urlBase} - deve retornar uma lista de heróis (status 200)`, done => {
       request.get(urlBase)
-        .expect('Content-type', /json/)
-        .expect('Content-type', /utf-8/)
         .end((erro, res) => {
           utils.validateResponse(res, 200, false)
 
@@ -32,13 +30,181 @@ describe('Heros', () => {
         })
     })
 
-    it(`${urlBase}/${hero.id} - deve retornar um único herói quando passa um id existente (status 200)`)
+    it(`${urlBase}/${hero.id} - deve retornar um único herói quando passa um id existente (status 200)`, done => {
+      request.get(`${urlBase}/${hero.id}`)
+        .end((erro, res) => {
+          utils.validateResponse(res, 200)
 
-    it(`${urlBase}/9999999999999 - não deve retornar nenhum herói quando passa um id inexistente (status 404)`)
+          res.body.should.have.property('length').is.a.Number().be.equal(1)
+
+          res.body.data.id.should.be.equal(hero.id)
+          res.body.data.name.should.be.equal(hero.name)
+          res.body.data.nickname.should.be.equal(hero.nickname)
+          res.body.data.email.should.be.equal(hero.email)
+          res.body.data.note.should.be.equal(hero.note)
+
+          done()
+        })
+    })
+
+    it(`${urlBase}/9999999999999 - não deve retornar nenhum herói quando passa um id inexistente (status 404)`, done => {
+      request.get(`${urlBase}/9999999999999`)
+        .end((erro, res) => {
+          utils.validateResponse(res, 404)
+
+          res.body.should.have.property('length').is.a.Number().be.equal(0)
+
+          done()
+        })
+    })
   })
 
   describe('POST', () => {
-    it(`${urlBase} - deve incluir um novo herói e retornar o novo cliente (status 201)`)
+    it(`${urlBase} - deve incluir um novo herói e retornar o novo herói (status 201)`, done => {
+      let postHero = new Hero()
+
+      request
+        .post(urlBase)
+        .set('Accept', 'application/json')
+        .send(postHero)
+        .end((erro, res) => {
+          utils.validateResponse(res, 201)
+
+          res.body.should.have.property('length').is.a.Number().be.equal(1)
+
+          res.body.data.should.have.property('id').is.a.Number()
+          res.body.data.name.should.be.equal(postHero.name)
+          res.body.data.nickname.should.be.equal(postHero.nickname)
+          res.body.data.email.should.be.equal(postHero.email)
+
+          done()
+        })
+    })
+
+    it(`${urlBase} - não deve incluir um herói se não enviar dados (status 422)`, done => {
+      request
+        .post(urlBase)
+        .set('Accept', 'application/json')
+        .expect('Content-type', /json/)
+        .expect('Content-type', /utf-8/)
+        .expect(422, done)
+    })
+
+    it(`${urlBase} - não deve incluir um herói se enviar os dados incorretos (status 422)`, done => {
+      request
+        .post(urlBase)
+        .set('Accept', 'application/json')
+        .send({x: 1, y: 'a'})
+        .expect('Content-type', /json/)
+        .expect('Content-type', /utf-8/)
+        .expect(422, done)
+    })
+
+    it(`${urlBase}/9999999999999 - não deve permitir posts com id (status 405)`, done => {
+      request
+        .post(`${urlBase}/9999999999999`)
+        .set('Accept', 'application/json')
+        .expect('Content-type', /json/)
+        .expect('Content-type', /utf-8/)
+        .expect(405, done)
+    })
+  })
+
+  describe('PUT', () => {
+    it(`${urlBase} - não deve permitir put sem id (status 405)`, done => {
+      request
+        .put(urlBase)
+        .set('Accept', 'application/json')
+        .expect('Content-type', /utf-8/)
+        .expect(405, done)
+    })
+
+    it(`${urlBase}/${hero.id} - deve atualizar um herói e retornar o herói atualizado (status 200)`, done => {
+      hero.name = faker.name.findName()
+      hero.nickname = faker.name.findName()
+      hero.email = faker.internet.email()
+
+      request
+        .put(`${urlBase}/${hero.id}`)
+        .set('Accept', 'application/json')
+        .send(hero)
+        .end((erro, res) => {
+          utils.validateResponse(res, 200)
+
+          res.body.should.have.property('length').is.a.Number().be.equal(1)
+
+          res.body.data.id.should.be.equal(hero.id)
+          res.body.data.name.should.be.equal(hero.name)
+          res.body.data.nickname.should.be.equal(hero.nickname)
+          res.body.data.email.should.be.equal(hero.email)
+
+          done()
+        })
+    })
+
+    it(`${urlBase}/${hero.id} - não deve atualizar um herói se não enviar os dados (status 422)`, done => {
+      request
+        .put(`${urlBase}/${hero.id}`)
+        .set('Accept', 'application/json')
+        .expect('Content-type', /json/)
+        .expect('Content-type', /utf-8/)
+        .expect(422, done)
+    })
+
+    it(`${urlBase}/8888888888888 - não deve atualizar nenhum herói se enviar um id diferente do id dos dados (status 422)`, done => {
+      let putHero = JSON.parse(JSON.stringify(hero))
+      putHero.id = 9999999999999
+
+      request
+        .put(`${urlBase}/8888888888888`)
+        .set('Accept', 'application/json')
+        .send(putHero)
+        .expect('Content-type', /json/)
+        .expect('Content-type', /utf-8/)
+        .expect(422, done)
+    })
+
+    it(`${urlBase}/9999999999999 - não deve atualizar nenhum herói se enviar um id inexistente (status 404)`, done => {
+      let putHero = JSON.parse(JSON.stringify(hero))
+      putHero.id = 9999999999999
+
+      request
+        .put(`${urlBase}/9999999999999`)
+        .set('Accept', 'application/json')
+        .send(putHero)
+        .expect('Content-type', /json/)
+        .expect('Content-type', /utf-8/)
+        .expect(404, done)
+    })
+  })
+
+  describe('DELETE', () => {
+    it(`${urlBase} - não deve permitir delete sem id (status 405)`, done => {
+      request
+        .delete(urlBase)
+        .set('Accept', 'application/json')
+        .expect('Content-type', /json/)
+        .expect('Content-type', /utf-8/)
+        .expect(405, done)
+    })
+
+    it(`${urlBase}/${hero.id} - deve excluir um herói existente ao passar um id existente (status 204)`, done => {
+      request
+        .delete(`${urlBase}/${hero.id}`)
+        .set('Accept', 'application/json')
+        .expect('Content-type', /json/)
+        .expect('Content-type', /utf-8/)
+        .expect(204, done)
+    })
+
+    it(`${urlBase}/9999999999999 - não deve excluir nenhum herói ao passar um id inexistente (status 404)`, done => {
+      request
+        .delete(urlBase + '/9999999999999')
+        .set('Accept', 'application/json')
+        .expect('Content-type', /json/)
+        .expect('Content-type', /utf-8/)
+        .expect(404, done)
+    })
   })
 })
 

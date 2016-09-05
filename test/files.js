@@ -23,8 +23,6 @@ describe('Files', () => {
   describe('GET', () => {
     it(`${urlBase} - deve retornar uma lista de arquivos (status 200)`, done => {
       request.get(urlBase)
-        .expect('Content-type', /json/)
-        .expect('Content-type', /utf-8/)
         .end((erro, res) => {
           utils.validateResponse(res, 200, false)
 
@@ -34,8 +32,6 @@ describe('Files', () => {
 
     it(`${urlBase}/${file.id} - deve retornar a informação de um único arquivo quando passa um id existente (status 200)`, done => {
       request.get(`${urlBase}/${file.id}`)
-        .expect('Content-type', /json/)
-        .expect('Content-type', /utf-8/)
         .end((erro, res) => {
           utils.validateResponse(res, 200)
 
@@ -52,8 +48,6 @@ describe('Files', () => {
 
     it(`${urlBase}/9999999999999 - não deve retornar nenhum arquivo quando passa um id inexistente (status 404)`, done => {
       request.get(`${urlBase}/9999999999999`)
-        .expect('Content-type', /json/)
-        .expect('Content-type', /utf-8/)
         .end((erro, res) => {
           utils.validateResponse(res, 404)
 
@@ -69,8 +63,6 @@ describe('Files', () => {
       request
         .post(urlBase)
         .attach('file', './test/file.png')
-        .expect('Content-type', /json/)
-        .expect('Content-type', /utf-8/)
         .end((erro, res) => {
           utils.validateResponse(res, 201)
 

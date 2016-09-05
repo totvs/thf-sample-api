@@ -1,4 +1,4 @@
-let contentType = {'Content-Type': 'application/json; charset=utf-8'}
+const contentType = {'Content-Type': 'application/json; charset=utf-8'}
 
 module.exports = {
   contentType,
