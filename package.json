@@ -25,18 +25,18 @@
     "testWithReport": "mocha --reporter mochawesome --reporter-options \"reportDir=reports\\test,reportName=index,reportTitle=Sample REST API,inlineAssets=true\" --check-leaks"
   },
   "dependencies": {
-    "body-parser": "^1.15.2",
-    "express": "^4.14.0",
-    "multer": "^1.2.0",
-    "sequelize": "^3.24.1",
-    "sqlite3": "^3.1.4"
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "multer": "^1.4.2",
+    "sequelize": "^5.21.2",
+    "sqlite3": "^4.1.0"
   },
   "devDependencies": {
-    "faker": "^3.1.0",
-    "mocha": "^3.0.2",
-    "mochawesome": "^1.5.1",
-    "should": "^11.1.0",
-    "standard": "^8.0.0",
-    "supertest": "^2.0.0"
+    "faker": "^4.1.0",
+    "mocha": "^6.2.2",
+    "mochawesome": "^4.1.0",
+    "should": "^13.2.3",
+    "standard": "^14.3.1",
+    "supertest": "^4.0.2"
   }
 }
